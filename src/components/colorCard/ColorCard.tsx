@@ -6,6 +6,8 @@ interface ColorCardProps {
     color: Model.Color;
 }
 
+const timeDelay = 1200
+
 const ColorCard : React.FC<ColorCardProps> = (props: ColorCardProps) => {
     const [copied, setCopied] = useState<boolean>(false);
 
@@ -14,10 +16,10 @@ const ColorCard : React.FC<ColorCardProps> = (props: ColorCardProps) => {
        setCopied(true);
        setTimeout(()=>{
            setCopied(false)
-       }, 1500)
+       }, timeDelay)
     }
     return (
-        <div className={'colorCard'} style={{backgroundColor: props.color.color}}>
+        <div className={'colorCard'} style={{backgroundColor: props.color.color, border: `4px solid ${props.color.color}`}}>
             <div style={{backgroundColor: props.color.color}} className={classNames({
                     copyOverlay: true,
                     active: copied
