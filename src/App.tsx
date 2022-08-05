@@ -3,12 +3,13 @@ import './App.scss';
 import { Routes, Route } from 'react-router-dom';
 import Palette from "./pages/palette/Palette";
 import seedColors from "./seedColors";
+import {generatePalette} from "./utils/colorHelpers";
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path={'/palette'} element={<Palette palette={seedColors[1]}/>}/>
+        <Route path={'/palette'} element={<Palette palette={generatePalette(seedColors[1])}/>}/>
       </Routes>
     </div>
   );

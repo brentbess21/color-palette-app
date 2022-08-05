@@ -3,7 +3,7 @@ declare namespace Model {
         paletteName: string;
         id: string;
         emoji: string;
-        colors: Color[]
+        colors: ColorLevels
     }
 
     export interface NewPalette {
@@ -11,6 +11,13 @@ declare namespace Model {
         id: string;
         emoji: string;
         colors: any;
+    }
+
+    export interface StarterPalette {
+        paletteName: string;
+        id: string;
+        emoji: string;
+        colors: Color[];
     }
 
     export interface Color {

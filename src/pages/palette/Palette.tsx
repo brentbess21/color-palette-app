@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Palette.scss';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 import ColorCard from "../../components/colorCard/ColorCard";
 
 interface PaletteProps {
@@ -7,13 +9,19 @@ interface PaletteProps {
 }
 
 const Palette : React.FC<PaletteProps> = (props: PaletteProps ) => {
+    const [level, setLevel] = useState<number>(500);
+
+    function changeLevel(value : number | number[]) : void {
+        setLevel(value as number);
+    }
+
     return(
         <div className={'palette'}>
             {/*header goes here */}
+            <Slider defaultValue={level} min={100} max={900} step={100} onChange={changeLevel} />
             <div className={'palette-colors'}>
-                {/* bunch of color boxes go here   */}
-                {props.palette.colors.map(color => {
-                    return <ColorCard color={color} />
+                {props.palette.colors[level as keyof Model.ColorLevels].map((color: Model.DetailedColor) => {
+                    return <ColorCard key={color.id} color={color} />
                 })}
             </div>
             {/* footer goes here   */}
