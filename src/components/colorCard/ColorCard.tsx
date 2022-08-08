@@ -6,9 +6,9 @@ interface ColorCardProps {
     color: Model.DetailedColor;
 }
 
-const timeDelay = 1200
+const timeDelay = 1200;
 
-const ColorCard : React.FC<ColorCardProps> = (props: ColorCardProps) => {
+const ColorCard : React.FC<ColorCardProps> = (props: ColorCardProps) : React.ReactElement => {
     const [copied, setCopied] = useState<boolean>(false);
 
     async function handleClick() : Promise<void> {

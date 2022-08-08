@@ -1,26 +1,33 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './Palette.scss';
-import Slider from 'rc-slider';
-import 'rc-slider/assets/index.css';
 import ColorCard from "../../components/colorCard/ColorCard";
+import Header from "../../components/header/Header";
+import {connect} from "react-redux";
+import {setLevel} from "../../state/actions/paletteActions";
 
-interface PaletteProps {
+interface PaletteStateProps {
+    sliderInfo: {
+        level: number
+    }
+}
+
+interface PaletteDispatchProps {
+//    delete if there is no props here
+}
+
+interface PaletteCustomProps {
     palette: Model.Palette
 }
 
-const Palette : React.FC<PaletteProps> = (props: PaletteProps ) => {
-    const [level, setLevel] = useState<number>(500);
+type PaletteProps = PaletteStateProps & PaletteDispatchProps & PaletteCustomProps
 
-    function changeLevel(value : number | number[]) : void {
-        setLevel(value as number);
-    }
+const Palette : React.FC<PaletteProps> = (props: PaletteProps ) : React.ReactElement => {
 
     return(
         <div className={'palette'}>
-            {/*header goes here */}
-            <Slider defaultValue={level} min={100} max={900} step={100} onChange={changeLevel} />
+            <Header />
             <div className={'palette-colors'}>
-                {props.palette.colors[level as keyof Model.ColorLevels].map((color: Model.DetailedColor) => {
+                {props.palette.colors[props.sliderInfo.level as keyof Model.ColorLevels].map((color: Model.DetailedColor) => {
                     return <ColorCard key={color.id} color={color} />
                 })}
             </div>
@@ -29,4 +36,12 @@ const Palette : React.FC<PaletteProps> = (props: PaletteProps ) => {
     )
 }
 
-export default Palette;
+const MapStateToProps = (state: any ) => {
+    return ({
+        sliderInfo : state.palette.sliderInfo
+    })
+}
+
+const MapDispatchToProps = {setLevel}
+
+export default connect(MapStateToProps, MapDispatchToProps)(Palette);
