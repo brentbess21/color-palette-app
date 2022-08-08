@@ -6,9 +6,8 @@ import {connect} from "react-redux";
 import {setLevel} from "../../state/actions/paletteActions";
 
 interface PaletteStateProps {
-    sliderInfo: {
-        level: number
-    }
+    sliderInfo: Model.SliderInfo
+    palette: Model.Palette
 }
 
 interface PaletteDispatchProps {
@@ -16,7 +15,6 @@ interface PaletteDispatchProps {
 }
 
 interface PaletteCustomProps {
-    palette: Model.Palette
 }
 
 type PaletteProps = PaletteStateProps & PaletteDispatchProps & PaletteCustomProps
@@ -32,13 +30,15 @@ const Palette : React.FC<PaletteProps> = (props: PaletteProps ) : React.ReactEle
                 })}
             </div>
             {/* footer goes here   */}
+            <button onClick={()=> console.log(props)}>Click</button>
         </div>
     )
 }
 
 const MapStateToProps = (state: any ) => {
     return ({
-        sliderInfo : state.palette.sliderInfo
+        palette: state.paletteState.palette,
+        sliderInfo : state.paletteState.sliderInfo
     })
 }
 

@@ -40,7 +40,7 @@ const Header : React.FC<HeaderProps> = (props: HeaderProps) : React.ReactElement
 
 const MapStateToProps = (state: any) => {
     return ({
-        sliderInfo: state.palette.sliderInfo
+        sliderInfo: state.paletteState.sliderInfo
     })
 }
 

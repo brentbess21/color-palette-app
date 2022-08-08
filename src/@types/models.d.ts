@@ -45,4 +45,8 @@ declare namespace Model {
         800: DetailedColor[];
         900: DetailedColor[];
     }
+
+    export interface SliderInfo {
+        level: number;
+    }
 }

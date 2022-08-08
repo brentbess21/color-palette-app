@@ -9,6 +9,6 @@ interface SetLevelAction {
 }
 
 
-export const setLevel = (value: number | number[])  => {
+export const setLevel = (value: number | number[]) : SetLevelAction  => {
     return ({type: PaletteActionTypes.setLevel, payload: value})
 }
