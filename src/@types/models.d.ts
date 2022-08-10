@@ -1,4 +1,14 @@
 declare namespace Model {
+
+    export interface StoreState {
+        paletteState: PaletteState
+    }
+
+    export interface PaletteState {
+        palette: Model.Palette;
+        sliderInfo: Model.SliderInfo
+    }
+
     export interface Palette {
         paletteName: string;
         id: string;

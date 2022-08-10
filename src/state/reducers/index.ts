@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import paletteReducer from "./paletteReducer";
 
-export default combineReducers({
+export default combineReducers<Model.StoreState>({
     paletteState: paletteReducer
 })
 

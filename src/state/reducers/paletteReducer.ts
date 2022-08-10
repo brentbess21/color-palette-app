@@ -4,19 +4,14 @@ import seedColors from "../../seedColors";
 
 const initialPalette = generatePalette(seedColors[0])
 
-interface PaletteState {
-    palette: Model.Palette;
-    sliderInfo: Model.SliderInfo
-}
-
-const initialPaletteState : PaletteState = {
+const initialPaletteState : Model.PaletteState = {
     palette: initialPalette,
     sliderInfo: {
         level: 500
     }
 }
 
-const paletteReducer = (state : PaletteState = initialPaletteState, action: any) : PaletteState => {
+const paletteReducer = (state : Model.PaletteState = initialPaletteState, action: any) : Model.PaletteState => {
     switch (action.type) {
         case(PaletteActionTypes.setLevel) :
             return ({...state, sliderInfo: {...state, level: action.payload}})

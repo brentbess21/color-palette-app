@@ -15,6 +15,7 @@ interface PaletteDispatchProps {
 }
 
 interface PaletteCustomProps {
+    // delete if there are no props here
 }
 
 type PaletteProps = PaletteStateProps & PaletteDispatchProps & PaletteCustomProps
@@ -35,7 +36,7 @@ const Palette : React.FC<PaletteProps> = (props: PaletteProps ) : React.ReactEle
     )
 }
 
-const MapStateToProps = (state: any ) => {
+const MapStateToProps = (state: Model.StoreState ) : Model.PaletteState => {
     return ({
         palette: state.paletteState.palette,
         sliderInfo : state.paletteState.sliderInfo
