@@ -6,8 +6,9 @@ import {connect} from "react-redux";
 import {setLevel} from "../../state/actions/paletteActions";
 
 interface PaletteStateProps {
-    sliderInfo: Model.SliderInfo
-    palette: Model.Palette
+    sliderInfo: Model.SliderInfo;
+    palette: Model.Palette;
+    colorFormat: string;
 }
 
 interface PaletteDispatchProps {
@@ -39,7 +40,8 @@ const Palette : React.FC<PaletteProps> = (props: PaletteProps ) : React.ReactEle
 const MapStateToProps = (state: Model.StoreState ) : Model.PaletteState => {
     return ({
         palette: state.paletteState.palette,
-        sliderInfo : state.paletteState.sliderInfo
+        sliderInfo : state.paletteState.sliderInfo,
+        colorFormat: state.paletteState.colorFormat
     })
 }
 

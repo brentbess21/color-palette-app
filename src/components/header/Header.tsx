@@ -2,7 +2,7 @@ import React from 'react';
 import './Header.scss';
 import Slider from "rc-slider";
 import 'rc-slider/assets/index.css';
-import {setLevel} from "../../state/actions/paletteActions";
+import {setColorFormat, setLevel} from "../../state/actions/paletteActions";
 import {connect} from "react-redux";
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -11,11 +11,14 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 interface HeaderStateProps {
-    sliderInfo: Model.SliderInfo
+    palette: Model.Palette;
+    sliderInfo: Model.SliderInfo;
+    colorFormat: string;
 }
 
 interface HeaderDispatchProps {
     setLevel: (value: number | number []) => void;
+    setColorFormat: (format : string) => void;
 }
 
 interface HeaderCustomProps {
@@ -31,7 +34,7 @@ const Header : React.FC<HeaderProps> = (props: HeaderProps) : React.ReactElement
     }
 
     const handleChange = (event: SelectChangeEvent) => {
-        console.log(event.target.value as string);
+        props.setColorFormat(event.target.value as string);
     };
 
     return(
@@ -41,19 +44,18 @@ const Header : React.FC<HeaderProps> = (props: HeaderProps) : React.ReactElement
                 <p>Level {props.sliderInfo.level}</p>
                 <Slider defaultValue={props.sliderInfo.level} min={100} max={900} step={100} onChange={changeLevel} />
             </div>
-            <Box className={'selectContainer'} sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label"></InputLabel>
+            <Box className={'selectContainer'} sx={{ width: 320, height: 30 }}>
+                <FormControl>
+                    <InputLabel id="colorFormatLabel">Format</InputLabel>
                     <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={'something'}
-                        label="Age"
+                        labelId="colorFormatLabel"
+                        value={props.colorFormat}
+                        label="Format"
                         onChange={handleChange}
                     >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
+                        <MenuItem value={'hex'}>HEX - #ffffff</MenuItem>
+                        <MenuItem value={'rgb'}>RGB - rgb(255, 255, 255)</MenuItem>
+                        <MenuItem value={'rgba'}>RGBA - rgba(255, 255, 255, 0.5)</MenuItem>
                     </Select>
                 </FormControl>
             </Box>
@@ -62,12 +64,14 @@ const Header : React.FC<HeaderProps> = (props: HeaderProps) : React.ReactElement
     )
 }
 
-const MapStateToProps = (state: Model.StoreState) : {sliderInfo: Model.SliderInfo} => {
+const MapStateToProps = (state: Model.StoreState) : Model.PaletteState => {
     return ({
-        sliderInfo: state.paletteState.sliderInfo
+        palette: state.paletteState.palette,
+        sliderInfo: state.paletteState.sliderInfo,
+        colorFormat: state.paletteState.colorFormat
     })
 }
 
-const MapDispatchToProps = {setLevel}
+const MapDispatchToProps = {setLevel, setColorFormat}
 
 export default connect(MapStateToProps, MapDispatchToProps)(Header);
