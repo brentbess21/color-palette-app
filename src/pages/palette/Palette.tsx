@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './Palette.scss';
 import ColorCard from "../../components/colorCard/ColorCard";
 import Header from "../../components/header/Header";
 import {connect} from "react-redux";
-import {setLevel} from "../../state/actions/paletteActions";
+import {setPalette} from "../../state/actions/paletteActions";
+import Footer from "../../components/footer/Footer";
 
 interface PaletteStateProps {
     sliderInfo: Model.SliderInfo;
@@ -12,7 +13,7 @@ interface PaletteStateProps {
 }
 
 interface PaletteDispatchProps {
-//    delete if there is no props here
+    setPalette: (palette: Model.StarterPalette) => void;
 }
 
 interface PaletteCustomProps {
@@ -22,17 +23,19 @@ interface PaletteCustomProps {
 type PaletteProps = PaletteStateProps & PaletteDispatchProps & PaletteCustomProps
 
 const Palette : React.FC<PaletteProps> = (props: PaletteProps ) : React.ReactElement => {
+    useEffect(()=> {
+
+    },[])
 
     return(
         <div className={'palette'}>
             <Header />
-            <div className={'palette-colors'}>
+            <div className={'paletteColors'}>
                 {props.palette.colors[props.sliderInfo.level as keyof Model.ColorLevels].map((color: Model.DetailedColor) => {
                     return <ColorCard key={color.id} color={color} />
                 })}
             </div>
-            {/* footer goes here   */}
-            <button onClick={()=> console.log(props)}>Click</button>
+            <Footer paletteName={props.palette.paletteName} emoji={props.palette.emoji} />
         </div>
     )
 }
@@ -45,6 +48,6 @@ const MapStateToProps = (state: Model.StoreState ) : Model.PaletteState => {
     })
 }
 
-const MapDispatchToProps = {setLevel}
+const MapDispatchToProps = {setPalette}
 
 export default connect(MapStateToProps, MapDispatchToProps)(Palette);

@@ -18,6 +18,8 @@ const paletteReducer = (state : Model.PaletteState = initialPaletteState, action
             return ({...state, sliderInfo: {...state, level: action.payload}});
         case(PaletteActionTypes.setColorFormat):
             return ({...state, colorFormat: action.payload});
+        case(PaletteActionTypes.setPalette):
+            return ({...state, palette: generatePalette(action.payload)})
         default:
             return state
     }
