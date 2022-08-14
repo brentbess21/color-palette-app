@@ -1,0 +1,23 @@
+.singleColorPalette {
+  height:87vh;
+  .paletteColors {
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    .backBox {
+      background-color: black;
+      color: white;
+      .backBoxContent {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:hover {
+          cursor: pointer;
+          transform: scale(1.3);
+          transition: transform 300ms ease-in-out;
+        }
+      }
+    }
+  }
+}

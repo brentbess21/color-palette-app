@@ -27,6 +27,7 @@ interface HeaderDispatchProps {
 
 interface HeaderCustomProps {
 //    delete if there is no props here
+    displaySlider: boolean;
 }
 
 type HeaderProps = HeaderStateProps & HeaderDispatchProps & HeaderCustomProps;
@@ -67,10 +68,10 @@ const Header : React.FC<HeaderProps> = (props: HeaderProps) : React.ReactElement
     return(
         <header className={'header'}>
             <div onClick={()=>{navigate('/')}} className={'logo'} ></div>
-            <div className={'slider'}>
+            {props.displaySlider && <div className={'slider'}>
                 <p>Level {props.sliderInfo.level}</p>
                 <Slider defaultValue={props.sliderInfo.level} min={100} max={900} step={100} onChange={changeLevel} />
-            </div>
+            </div>}
             <Box className={'selectContainer'} sx={{ width: 320, height: 30 }}>
                 <FormControl>
                     <InputLabel id="colorFormatLabel">Format</InputLabel>

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './ColorCard.scss';
 import classNames from "classnames";
 import {connect} from "react-redux";
+import {useNavigate} from "react-router";
 
 interface ColorCardStateProps {
     palette: Model.Palette;
@@ -11,6 +12,7 @@ interface ColorCardStateProps {
 
 interface ColorCardCustomProps {
     color: Model.DetailedColor;
+    showMoreLink: boolean;
 }
 
 type ColorCardProps = ColorCardStateProps & ColorCardCustomProps;
@@ -18,6 +20,7 @@ type ColorCardProps = ColorCardStateProps & ColorCardCustomProps;
 const timeDelay = 1200;
 
 const ColorCard : React.FC<ColorCardProps> = (props: ColorCardProps) : React.ReactElement => {
+    const navigate = useNavigate();
     const [copied, setCopied] = useState<boolean>(false);
 
     async function handleClick() : Promise<void> {
@@ -47,7 +50,7 @@ const ColorCard : React.FC<ColorCardProps> = (props: ColorCardProps) : React.Rea
                 </div>
                 <button onClick={handleClick} className={'copyButton'}>Copy</button>
             </div>
-            <span className={'moreInfo'}>More</span>
+            {props.showMoreLink && <span onClick={()=>navigate(`/palette/${props.palette.id}/${props.color.id}`)} className={'moreInfo'}>More</span>}
         </div>
     )
 }

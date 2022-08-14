@@ -43,4 +43,15 @@ function generateScale(hexColor: string, numberOfColors: number) : string[] {
     return chroma.scale(getRange(hexColor)).mode('lab').colors(numberOfColors);
 }
 
-export {generatePalette}
+function getSingleColorShades(palette : Model.Palette, colorId : string | undefined) {
+    let shades : any[] = [];
+    let allColors = palette.colors;
+    for(let key in allColors) {
+        shades = shades.concat(
+            allColors[key as unknown as keyof Model.ColorLevels].filter(color => color.id === colorId)
+        )
+    }
+    return shades.slice(1);
+}
+
+export {generatePalette, getSingleColorShades}

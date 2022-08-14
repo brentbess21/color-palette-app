@@ -29,10 +29,10 @@ const Palette : React.FC<PaletteProps> = (props: PaletteProps ) : React.ReactEle
 
     return(
         <div className={'palette'}>
-            <Header />
+            <Header displaySlider={true} />
             <div className={'paletteColors'}>
                 {props.palette.colors[props.sliderInfo.level as keyof Model.ColorLevels].map((color: Model.DetailedColor) => {
-                    return <ColorCard key={color.id} color={color} />
+                    return <ColorCard key={color.id} color={color} showMoreLink={true} />
                 })}
             </div>
             <Footer paletteName={props.palette.paletteName} emoji={props.palette.emoji} />
