@@ -3,6 +3,7 @@ import './ColorCard.scss';
 import classNames from "classnames";
 import {connect} from "react-redux";
 import {useNavigate} from "react-router";
+import chroma from 'chroma-js';
 
 interface ColorCardStateProps {
     palette: Model.Palette;
@@ -22,6 +23,7 @@ const timeDelay = 1200;
 const ColorCard : React.FC<ColorCardProps> = (props: ColorCardProps) : React.ReactElement => {
     const navigate = useNavigate();
     const [copied, setCopied] = useState<boolean>(false);
+    const isDarkColor = chroma(props.color[props.colorFormat as keyof Model.DetailedColor]).luminance() <= 0.6;
 
     async function handleClick() : Promise<void> {
        await navigator.clipboard.writeText(props.color[props.colorFormat as keyof Model.DetailedColor]);
@@ -45,12 +47,18 @@ const ColorCard : React.FC<ColorCardProps> = (props: ColorCardProps) : React.Rea
                 <p>{props.color[props.colorFormat as keyof Model.DetailedColor]}</p>
             </div>
             <div className={'copyContainer'}>
-                <div className={'cardContent'}>
+                <div className={classNames({
+                    cardContent: true,
+                    darkColor: isDarkColor,
+                })}>
                     <span>{props.color.name}</span>
                 </div>
                 <button onClick={handleClick} className={'copyButton'}>Copy</button>
             </div>
-            {props.showMoreLink && <span onClick={()=>navigate(`/palette/${props.palette.id}/${props.color.id}`)} className={'moreInfo'}>More</span>}
+            {props.showMoreLink && <span onClick={()=>navigate(`/palette/${props.palette.id}/${props.color.id}`)} className={(classNames({
+                moreInfo: true,
+                darkColor: isDarkColor
+            }))}>More</span>}
         </div>
     )
 }

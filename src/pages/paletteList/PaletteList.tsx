@@ -22,11 +22,12 @@ const PaletteList : React.FC<PaletteListProps> = (props: PaletteListProps) : Rea
             <div className={'paletteListContainer'}>
                 <div className={'headerContainer'}>
                     <h1>Color Palettes</h1>
+                    <button onClick={()=>navigate('/new-palette')}>Create New Palette</button>
                 </div>
                 <div className={'miniPaletteContainer'}>
                     {props.palettes.map(palette=> {
                         return (
-                            <div className={'miniPalette'} onClick={()=> {
+                            <div className={'miniPalette'} key={palette.id} onClick={()=> {
                                 props.setPalette(palette);
                                 navigate(`/palette/${palette.id}`);
                             }}>

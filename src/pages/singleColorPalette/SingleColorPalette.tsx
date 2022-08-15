@@ -30,7 +30,7 @@ const SingleColorPalette: React.FC<SingleColorPaletteProps> = (props: SingleColo
             <Header displaySlider={false} />
             <div className={'paletteColors'}>
                 {singleColorShades.map(color => {
-                    return <ColorCard color={color} showMoreLink={false} />
+                    return <ColorCard key={color.name} color={color} showMoreLink={false} />
                 })}
                 <div onClick={()=> navigate(`/palette/${paletteId}`)} className={'colorCard backBox'}>
                     <div className={'backBoxContent'}>
