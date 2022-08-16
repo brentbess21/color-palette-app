@@ -2,6 +2,7 @@ declare namespace Model {
 
     export interface StoreState {
         paletteState: PaletteState
+        colorsState: ColorsState
     }
 
     export interface PaletteState {
@@ -29,6 +30,10 @@ declare namespace Model {
         id: string;
         emoji: string;
         colors: Color[];
+    }
+
+    export interface ColorsState {
+        colors: Color[] | [];
     }
 
     export interface Color {

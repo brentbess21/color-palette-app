@@ -1,0 +1,17 @@
+.colorPicker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 8px;
+  gap: 8px;
+  .buttonContainer{
+    display: flex;
+    gap: 4px;
+    justify-content: space-evenly;
+    width: 100%;
+  }
+  button{
+    width: 100%;
+  }
+}

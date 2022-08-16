@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -13,9 +12,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import HomeIcon from '@mui/icons-material/Home';
 import {useNavigate} from "react-router";
-import { ChromePicker } from 'react-color';
+import {ChromePicker, Color, ColorResult} from 'react-color';
 
 const drawerWidth = 320;
+
+interface SlideOutDrawerProps {
+    colorPickerComponent: React.ReactElement;
+}
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     open?: boolean;
@@ -66,18 +69,35 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-end',
 }));
 
-const SlideOutDrawer : React.FC = () : React.ReactElement => {
+const SlideOutDrawer : React.FC<SlideOutDrawerProps> = (props: SlideOutDrawerProps) : React.ReactElement => {
     const navigate = useNavigate();
     const theme = useTheme();
     const [open, setOpen] = useState<boolean>(true);
+    const [color, setColor] = useState<any>('#0000FF');
+    const [colors] = useState<any>([]);
 
-    const handleDrawerOpen = () => {
+    function handleDrawerOpen(){
         setOpen(true);
     };
 
-    const handleDrawerClose = () => {
+    function handleDrawerClose(){
         setOpen(false);
     };
+
+    function addNewColor() {
+        colors.push(color)
+        console.log(colors)
+    }
+
+    function renderColorList() {
+        return (
+            <ul>
+                {colors.map((addedColor: ColorResult) =>{
+                    return <li style={{backgroundColor: addedColor.hex}}>{addedColor.hex}</li>
+                })}
+            </ul>
+        )
+    }
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -126,15 +146,20 @@ const SlideOutDrawer : React.FC = () : React.ReactElement => {
                     </IconButton>
                 </DrawerHeader>
                 <Divider />
-                <Typography variant={'h3'}>Design Your Palette</Typography>
-                <Box sx={{display: 'flex'}}>
-                    <Button variant={'contained'} color={'secondary'}>Clear Palette</Button>
-                    <Button variant={'contained'} color={'primary'}>Random Color</Button>
-                </Box>
-                <ChromePicker color={'purple'} onChangeComplete={newColor=>console.log(newColor)}/>
+
+                {props.colorPickerComponent}
+
+                {/*<Typography variant={'h3'}>Design Your Palette</Typography>*/}
+                {/*<Box sx={{display: 'flex'}}>*/}
+                {/*    <Button variant={'contained'} color={'secondary'}>Clear Palette</Button>*/}
+                {/*    <Button variant={'contained'} color={'primary'}>Random Color</Button>*/}
+                {/*</Box>*/}
+                {/*<ChromePicker color={color} onChange={(color)=>setColor(color)}/>*/}
+                {/*<Button onClick={addNewColor} variant={'contained'} color={'primary'} style={{backgroundColor: color.hex}}>Add Color</Button>*/}
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />
+                {renderColorList()}
             </Main>
         </Box>
     );
