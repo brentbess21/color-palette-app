@@ -6,7 +6,7 @@ import {useNavigate} from "react-router";
 import chroma from 'chroma-js';
 
 interface ColorCardStateProps {
-    palette: Model.Palette;
+    currentPalette: Model.Palette;
     sliderInfo: Model.SliderInfo;
     colorFormat: string;
 }
@@ -55,7 +55,7 @@ const ColorCard : React.FC<ColorCardProps> = (props: ColorCardProps) : React.Rea
                 </div>
                 <button onClick={handleClick} className={'copyButton'}>Copy</button>
             </div>
-            {props.showMoreLink && <span onClick={()=>navigate(`/palette/${props.palette.id}/${props.color.id}`)} className={(classNames({
+            {props.showMoreLink && <span onClick={()=>navigate(`/palette/${props.currentPalette.id}/${props.color.id}`)} className={(classNames({
                 moreInfo: true,
                 darkColor: isDarkColor
             }))}>More</span>}
@@ -65,7 +65,8 @@ const ColorCard : React.FC<ColorCardProps> = (props: ColorCardProps) : React.Rea
 
 const MapStateToProps = (state: Model.StoreState) : Model.PaletteState => {
     return({
-        palette: state.paletteState.palette,
+        palettes: state.paletteState.palettes,
+        currentPalette: state.paletteState.currentPalette,
         sliderInfo: state.paletteState.sliderInfo,
         colorFormat: state.paletteState.colorFormat
     })

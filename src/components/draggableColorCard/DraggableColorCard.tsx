@@ -1,10 +1,14 @@
 import React from 'react';
 import './DraggableColorCard.scss';
 
-const DraggableColorCard : React.FC = () : React.ReactElement => {
-    return (
-        <div className={'draggableColorCard'}>
+interface DraggableColorCardProps {
+    color: Model.Color
+}
 
+const DraggableColorCard : React.FC<DraggableColorCardProps> = (props: DraggableColorCardProps) : React.ReactElement => {
+    return (
+        <div className={'draggableColorCard'} style={{backgroundColor: props.color.color}}>
+            <span>{props.color.name}</span>
         </div>
     )
 }

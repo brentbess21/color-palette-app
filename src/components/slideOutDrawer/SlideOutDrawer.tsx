@@ -12,19 +12,33 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import HomeIcon from '@mui/icons-material/Home';
 import {useNavigate} from "react-router";
-import {ChromePicker, Color, ColorResult} from 'react-color';
+import {Button} from "@mui/material";
+import {connect} from "react-redux";
+import {savePalette} from "../../state/actions/paletteActions";
 
 const drawerWidth = 320;
 
-interface SlideOutDrawerProps {
-    colorPickerComponent: React.ReactElement;
+interface SlideOutDrawerStateProps {
+    colors: Model.Color[];
 }
+
+interface SlideOutDrawerDispatchProps {
+    savePalette: (palette: Model.StarterPalette) => void;
+}
+
+interface SlideOutDrawerCustomProps {
+    colorPickerComponent: React.ReactElement;
+    renderDraggablePalette: ()=> React.ReactElement;
+}
+
+type SlideOutDrawerProps = SlideOutDrawerStateProps & SlideOutDrawerDispatchProps & SlideOutDrawerCustomProps;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     open?: boolean;
 }>(({ theme, open }) => ({
+    height: '85vh',
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
     transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -73,8 +87,6 @@ const SlideOutDrawer : React.FC<SlideOutDrawerProps> = (props: SlideOutDrawerPro
     const navigate = useNavigate();
     const theme = useTheme();
     const [open, setOpen] = useState<boolean>(true);
-    const [color, setColor] = useState<any>('#0000FF');
-    const [colors] = useState<any>([]);
 
     function handleDrawerOpen(){
         setOpen(true);
@@ -84,20 +96,18 @@ const SlideOutDrawer : React.FC<SlideOutDrawerProps> = (props: SlideOutDrawerPro
         setOpen(false);
     };
 
-    function addNewColor() {
-        colors.push(color)
-        console.log(colors)
+    function handleSave(){
+        const newPalette : Model.StarterPalette = {
+            paletteName: 'Testing Testing',
+            emoji: 'put emoji here',
+            id: 'something-goes-here',
+            colors: props.colors
+        }
+        console.log(newPalette)
+        props.savePalette(newPalette);
+        navigate('/');
     }
 
-    function renderColorList() {
-        return (
-            <ul>
-                {colors.map((addedColor: ColorResult) =>{
-                    return <li style={{backgroundColor: addedColor.hex}}>{addedColor.hex}</li>
-                })}
-            </ul>
-        )
-    }
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -118,13 +128,17 @@ const SlideOutDrawer : React.FC<SlideOutDrawerProps> = (props: SlideOutDrawerPro
                             Create New Palette
                         </Typography>
                     </Box>
-                    <IconButton
-                        color={'inherit'}
-                        aria-label={'home button'}
-                        onClick={()=>navigate('/')}
-                    >
-                        <HomeIcon />
-                    </IconButton>
+                    <Box>
+                        <Button variant={'contained'} color={'secondary'} onClick={handleSave}>Save Palette</Button>
+                        <IconButton
+                            color={'inherit'}
+                            aria-label={'home button'}
+                            onClick={()=>navigate('/')}
+                            sx={{marginLeft: 4}}
+                        >
+                            <HomeIcon />
+                        </IconButton>
+                    </Box>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -146,23 +160,22 @@ const SlideOutDrawer : React.FC<SlideOutDrawerProps> = (props: SlideOutDrawerPro
                     </IconButton>
                 </DrawerHeader>
                 <Divider />
-
                 {props.colorPickerComponent}
-
-                {/*<Typography variant={'h3'}>Design Your Palette</Typography>*/}
-                {/*<Box sx={{display: 'flex'}}>*/}
-                {/*    <Button variant={'contained'} color={'secondary'}>Clear Palette</Button>*/}
-                {/*    <Button variant={'contained'} color={'primary'}>Random Color</Button>*/}
-                {/*</Box>*/}
-                {/*<ChromePicker color={color} onChange={(color)=>setColor(color)}/>*/}
-                {/*<Button onClick={addNewColor} variant={'contained'} color={'primary'} style={{backgroundColor: color.hex}}>Add Color</Button>*/}
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />
-                {renderColorList()}
+                {props.renderDraggablePalette()}
             </Main>
         </Box>
     );
 }
 
-export default SlideOutDrawer;
+const MapStateToProps = (state: Model.StoreState) : Model.ColorsState => {
+    return ({
+        colors: state.colorsState.colors
+    })
+}
+
+const MapDispatchToProps = {savePalette}
+
+export default connect(MapStateToProps, MapDispatchToProps)(SlideOutDrawer);

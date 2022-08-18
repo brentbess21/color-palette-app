@@ -15,7 +15,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import {useNavigate} from "react-router";
 
 interface HeaderStateProps {
-    palette: Model.Palette;
+    currentPalette: Model.Palette;
     sliderInfo: Model.SliderInfo;
     colorFormat: string;
 }
@@ -26,7 +26,6 @@ interface HeaderDispatchProps {
 }
 
 interface HeaderCustomProps {
-//    delete if there is no props here
     displaySlider: boolean;
 }
 
@@ -100,7 +99,8 @@ const Header : React.FC<HeaderProps> = (props: HeaderProps) : React.ReactElement
 
 const MapStateToProps = (state: Model.StoreState) : Model.PaletteState => {
     return ({
-        palette: state.paletteState.palette,
+        palettes: state.paletteState.palettes,
+        currentPalette: state.paletteState.currentPalette,
         sliderInfo: state.paletteState.sliderInfo,
         colorFormat: state.paletteState.colorFormat
     })

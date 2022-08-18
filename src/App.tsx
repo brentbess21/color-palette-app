@@ -16,7 +16,7 @@ function App() {
         <Route path={'/new-palette'} element={<NewPalettePage />}/>
         <Route path={'/palette/:paletteId/:colorId'} element={<SingleColorPalette />} />
         <Route path={'/palette/:id'} element={<Palette />}/>
-        <Route path={'/'} element={<PaletteList palettes={seedColors} />}/>
+        <Route path={'/'} element={<PaletteList />}/>
         <Route path={'*'} element={<ErrorPage />}/>
       </Routes>
     </div>

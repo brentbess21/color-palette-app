@@ -5,15 +5,19 @@ import {connect} from "react-redux";
 import {setPalette} from "../../state/actions/paletteActions";
 import PaletteCard from "../../components/paletteCard/PaletteCard";
 
+interface PaletteListStateProps {
+    palettes: Model.StarterPalette[]
+}
+
 interface PaletteListDispatchProps {
     setPalette: (newPalette: Model.StarterPalette) => void;
 }
 
 interface PaletteListCustomProps {
-    palettes: Model.StarterPalette[]
+
 }
 
-type PaletteListProps = PaletteListDispatchProps & PaletteListCustomProps;
+type PaletteListProps = PaletteListStateProps & PaletteListDispatchProps & PaletteListCustomProps;
 
 const PaletteList : React.FC<PaletteListProps> = (props: PaletteListProps) : React.ReactElement => {
     let navigate = useNavigate();
@@ -43,7 +47,8 @@ const PaletteList : React.FC<PaletteListProps> = (props: PaletteListProps) : Rea
 
 const MapStateToProps = (state: Model.StoreState) => {
     return ({
-        palette: state.paletteState.palette
+        palettes: state.paletteState.palettes,
+        currentPalette: state.paletteState.currentPalette
     })
 }
 

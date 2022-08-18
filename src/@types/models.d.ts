@@ -6,7 +6,8 @@ declare namespace Model {
     }
 
     export interface PaletteState {
-        palette: Model.Palette;
+        palettes: StarterPalette[]
+        currentPalette: Model.Palette;
         sliderInfo: Model.SliderInfo;
         colorFormat: string;
     }

@@ -2,7 +2,8 @@
 export enum PaletteActionTypes {
     setLevel = 'SET_LEVEL',
     setColorFormat = 'SET_COLOR_FORMAT',
-    setPalette = 'SET_PALETTE'
+    setPalette = 'SET_PALETTE',
+    savePalette = 'SAVE_PALETTE'
 }
 
 interface SetLevelAction {
@@ -20,6 +21,11 @@ interface SetPaletteAction {
     payload: Model.StarterPalette;
 }
 
+interface SavePaletteAction {
+    type: PaletteActionTypes.savePalette;
+    payload: Model.StarterPalette
+}
+
 
 export const setLevel = (value: number | number[]) : SetLevelAction  => {
     return ({type: PaletteActionTypes.setLevel, payload: value})
@@ -31,4 +37,8 @@ export const setColorFormat = (format: string) : SetColorFormatAction => {
 
 export const setPalette = (palette: Model.StarterPalette) : SetPaletteAction => {
     return ({type: PaletteActionTypes.setPalette, payload: palette})
+}
+
+export const savePalette = (palette: Model.StarterPalette) : SavePaletteAction => {
+    return ({type: PaletteActionTypes.savePalette, payload: palette})
 }

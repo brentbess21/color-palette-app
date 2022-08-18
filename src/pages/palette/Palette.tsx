@@ -8,7 +8,7 @@ import Footer from "../../components/footer/Footer";
 
 interface PaletteStateProps {
     sliderInfo: Model.SliderInfo;
-    palette: Model.Palette;
+    currentPalette: Model.Palette;
     colorFormat: string;
 }
 
@@ -31,18 +31,19 @@ const Palette : React.FC<PaletteProps> = (props: PaletteProps ) : React.ReactEle
         <div className={'palette'}>
             <Header displaySlider={true} />
             <div className={'paletteColors'}>
-                {props.palette.colors[props.sliderInfo.level as keyof Model.ColorLevels].map((color: Model.DetailedColor) => {
+                {props.currentPalette.colors[props.sliderInfo.level as keyof Model.ColorLevels].map((color: Model.DetailedColor) => {
                     return <ColorCard key={color.id} color={color} showMoreLink={true} />
                 })}
             </div>
-            <Footer paletteName={props.palette.paletteName} emoji={props.palette.emoji} />
+            <Footer paletteName={props.currentPalette.paletteName} emoji={props.currentPalette.emoji} />
         </div>
     )
 }
 
 const MapStateToProps = (state: Model.StoreState ) : Model.PaletteState => {
     return ({
-        palette: state.paletteState.palette,
+        palettes: state.paletteState.palettes,
+        currentPalette: state.paletteState.currentPalette,
         sliderInfo : state.paletteState.sliderInfo,
         colorFormat: state.paletteState.colorFormat
     })

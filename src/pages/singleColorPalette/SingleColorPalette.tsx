@@ -10,7 +10,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {useNavigate} from "react-router";
 
 interface SingleColorPaletteStateProps {
-    palette: Model.Palette;
+    currentPalette: Model.Palette;
 }
 
 interface SingleColorPaletteCustomProps {
@@ -22,7 +22,7 @@ type SingleColorPaletteProps = SingleColorPaletteStateProps & SingleColorPalette
 const SingleColorPalette: React.FC<SingleColorPaletteProps> = (props: SingleColorPaletteProps) : React.ReactElement => {
     const navigate = useNavigate();
     const { paletteId, colorId } = useParams();
-    const singleColorShades = getSingleColorShades(props.palette, colorId);
+    const singleColorShades = getSingleColorShades(props.currentPalette, colorId);
 
 
     return (
@@ -39,14 +39,15 @@ const SingleColorPalette: React.FC<SingleColorPaletteProps> = (props: SingleColo
                     </div>
                 </div>
             </div>
-            <Footer paletteName={props.palette.paletteName} emoji={props.palette.emoji} />
+            <Footer paletteName={props.currentPalette.paletteName} emoji={props.currentPalette.emoji} />
         </div>
     )
 }
 
 const MapStateToProps = (state: Model.StoreState) : Model.PaletteState => {
     return ({
-        palette: state.paletteState.palette,
+        palettes: state.paletteState.palettes,
+        currentPalette: state.paletteState.currentPalette,
         sliderInfo: state.paletteState.sliderInfo,
         colorFormat: state.paletteState.colorFormat
     })
