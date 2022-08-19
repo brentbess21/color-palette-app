@@ -2,4 +2,27 @@
   width: 20%;
   height: 25%;
   position: relative;
+  .cardContent {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 8px;
+    letter-spacing: 1px;
+    font-size: 12px;
+    color: black;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .deleteIcon {
+      color: black;
+      font-size: 24px;
+      &:hover {
+        color: white;
+      }
+    }
+    &.darkColor {
+      color: white;
+    }
+  }
 }

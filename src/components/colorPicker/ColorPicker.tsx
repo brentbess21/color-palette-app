@@ -54,7 +54,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props: ColorPickerProps) : Reac
             </div>
             <ChromePicker color={pickedColor} onChange={(color)=>setPickedColor(color)}/>
             <ValidatorForm className={'inputContainer'} onSubmit={handleSubmit}>
-                <TextValidator label={'Color Name'} className={'colorInput'} name={'colorName'} value={formValues} onChange={handleChange} validators={['required', 'uniqueName']} errorMessages={['Color name is required', 'That name has already been used']} />
+                <TextValidator autoFocus label={'Color Name'} className={'colorInput'} name={'colorName'} value={formValues} onChange={handleChange} validators={['required', 'uniqueName']} errorMessages={['Color name is required', 'That name has already been used']} />
                 <button type={'submit'}>Add Color</button>
             </ValidatorForm>
         </div>

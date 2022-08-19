@@ -8,6 +8,8 @@ const colorsReducer = (state : Model.ColorsState = initialColorsState, action: a
     switch (action.type) {
         case(ColorActionTypes.addColor):
             return ({...state, colors: [...state.colors, action.payload]});
+        case(ColorActionTypes.deleteColor):
+            return ({...state, colors: state.colors.filter(color=> color !== action.payload)})
         case(ColorActionTypes.clearColors):
             return ({...state, colors: []})
         default:

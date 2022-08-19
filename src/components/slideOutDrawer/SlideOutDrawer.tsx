@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import React, {useState} from 'react';
+import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,25 +13,14 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import HomeIcon from '@mui/icons-material/Home';
 import {useNavigate} from "react-router";
 import {Button} from "@mui/material";
-import {connect} from "react-redux";
-import {savePalette} from "../../state/actions/paletteActions";
+import PopUpForm from "../popUpForm/PopUpForm";
 
 const drawerWidth = 320;
 
-interface SlideOutDrawerStateProps {
-    colors: Model.Color[];
-}
-
-interface SlideOutDrawerDispatchProps {
-    savePalette: (palette: Model.StarterPalette) => void;
-}
-
-interface SlideOutDrawerCustomProps {
+interface SlideOutDrawerProps {
     colorPickerComponent: React.ReactElement;
     renderDraggablePalette: ()=> React.ReactElement;
 }
-
-type SlideOutDrawerProps = SlideOutDrawerStateProps & SlideOutDrawerDispatchProps & SlideOutDrawerCustomProps;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     open?: boolean;
@@ -85,8 +74,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const SlideOutDrawer : React.FC<SlideOutDrawerProps> = (props: SlideOutDrawerProps) : React.ReactElement => {
     const navigate = useNavigate();
-    const theme = useTheme();
     const [open, setOpen] = useState<boolean>(true);
+    const [isPopUpOpen, setIsPopUpOpen] = useState<boolean>(false);
 
     function handleDrawerOpen(){
         setOpen(true);
@@ -96,18 +85,13 @@ const SlideOutDrawer : React.FC<SlideOutDrawerProps> = (props: SlideOutDrawerPro
         setOpen(false);
     };
 
-    function handleSave(){
-        const newPalette : Model.StarterPalette = {
-            paletteName: 'Testing Testing',
-            emoji: 'put emoji here',
-            id: 'something-goes-here',
-            colors: props.colors
-        }
-        console.log(newPalette)
-        props.savePalette(newPalette);
-        navigate('/');
+    function handlePopUpOpen() {
+        setIsPopUpOpen(true);
     }
 
+    function handlePopUpClose() {
+        setIsPopUpOpen(false);
+    }
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -124,12 +108,13 @@ const SlideOutDrawer : React.FC<SlideOutDrawerProps> = (props: SlideOutDrawerPro
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="h6" noWrap component="div">
+                        <Typography onClick={()=>navigate('/')} variant="h6" noWrap component="div">
                             Create New Palette
                         </Typography>
                     </Box>
                     <Box>
-                        <Button variant={'contained'} color={'secondary'} onClick={handleSave}>Save Palette</Button>
+                        <PopUpForm isPopUpOpen={isPopUpOpen} handlePopUpClose={handlePopUpClose} />
+                        <Button variant={'contained'} color={'secondary'} onClick={handlePopUpOpen}>Save Palette</Button>
                         <IconButton
                             color={'inherit'}
                             aria-label={'home button'}
@@ -170,12 +155,4 @@ const SlideOutDrawer : React.FC<SlideOutDrawerProps> = (props: SlideOutDrawerPro
     );
 }
 
-const MapStateToProps = (state: Model.StoreState) : Model.ColorsState => {
-    return ({
-        colors: state.colorsState.colors
-    })
-}
-
-const MapDispatchToProps = {savePalette}
-
-export default connect(MapStateToProps, MapDispatchToProps)(SlideOutDrawer);
+export default SlideOutDrawer;
