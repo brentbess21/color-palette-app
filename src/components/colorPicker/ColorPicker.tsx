@@ -33,11 +33,24 @@ const ColorPicker: React.FC<ColorPickerProps> = (props: ColorPickerProps) : Reac
         // ValidatorForm.addValidationRule('uniqueColor', (value)=> {
         //     return props.colors.every(({color})=> color !== pickedColor.hex)
         // })
-    }, [formValues])
+    }, [formValues]);
+
+    function generateRandomColor(){
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        const randomColor = '#' + [r, g, b].map(x => {
+            const hex = x.toString(16)
+            return hex.length === 1 ? '0' + hex : hex
+        }).join('');
+
+        props.addColor(formValues, randomColor);
+        setFormValues('');
+    }
 
     function handleSubmit(e: FormEvent){
         e.preventDefault()
-        props.addColor(formValues, pickedColor);
+        props.addColor(formValues, pickedColor.hex);
         setFormValues('');
     }
 
@@ -50,7 +63,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props: ColorPickerProps) : Reac
             <h1>Design Your Palette</h1>
             <div className={'buttonContainer'}>
                 <button onClick={()=>{props.clearColors()}}>Clear Palette</button>
-                <button>Random Color</button>
+                <button onClick={generateRandomColor}>Random Color</button>
             </div>
             <ChromePicker color={pickedColor} onChange={(color)=>setPickedColor(color)}/>
             <ValidatorForm className={'inputContainer'} onSubmit={handleSubmit}>

@@ -25,7 +25,7 @@ const NewPalettePage : React.FC<NewPalettePageProps> = (props: NewPalettePagePro
         return (
             <div className={'palette'}>
                 {props.colors.map(color=> {
-                    return <DraggableColorCard color={color} />
+                    return <DraggableColorCard color={color} key={color.name} />
                 })}
             </div>
         )

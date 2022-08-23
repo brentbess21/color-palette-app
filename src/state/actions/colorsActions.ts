@@ -19,7 +19,7 @@ interface ClearColorsAction {
 }
 
 export function addColor(name: string, color: any) : AddColorAction {
-    return({type: ColorActionTypes.addColor, payload: {name: name, color: color.hex}})
+    return({type: ColorActionTypes.addColor, payload: {name: name, color: color}})
 }
 
 export function deleteColor(color: Model.Color) :DeleteColorAction {
