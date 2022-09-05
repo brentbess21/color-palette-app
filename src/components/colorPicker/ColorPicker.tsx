@@ -43,8 +43,8 @@ const ColorPicker: React.FC<ColorPickerProps> = (props: ColorPickerProps) : Reac
             const hex = x.toString(16)
             return hex.length === 1 ? '0' + hex : hex
         }).join('');
-
-        props.addColor(formValues, randomColor);
+        const randomColorName = `Random Color ${props.colors.length + 1}`
+        props.addColor(randomColorName, randomColor);
         setFormValues('');
     }
 

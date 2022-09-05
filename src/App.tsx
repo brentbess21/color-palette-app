@@ -1,10 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './App.scss';
-import {Routes, Route, useParams} from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import Palette from "./pages/palette/Palette";
 import PaletteList from "./pages/paletteList/PaletteList";
 import ErrorPage from "./pages/errorPage/ErrorPage";
-import seedColors from "./seedColors";
 import SingleColorPalette from "./pages/singleColorPalette/SingleColorPalette";
 import NewPalettePage from "./pages/newPalettePage/NewPalettePage";
 
