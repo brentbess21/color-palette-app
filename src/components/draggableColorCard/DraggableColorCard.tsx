@@ -29,8 +29,8 @@ const DraggableColorCard : React.FC<DraggableColorCardProps> = (props: Draggable
         <div className={'draggableColorCard'} style={{backgroundColor: props.color.color}}>
             <div className={'cardContent'}>
                 <span>{props.color.name}</span>
-                <IconButton>
-                    <DeleteForeverIcon onClick={handleDelete} className={'deleteIcon'} />
+                <IconButton onClick={handleDelete}>
+                    <DeleteForeverIcon className={'deleteIcon'} />
                 </IconButton>
             </div>
         </div>

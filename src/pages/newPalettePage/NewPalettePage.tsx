@@ -3,14 +3,17 @@ import './NewPalettePage.scss';
 import SlideOutDrawer from "../../components/slideOutDrawer/SlideOutDrawer";
 import ColorPicker from "../../components/colorPicker/ColorPicker";
 import {connect} from "react-redux";
-import DraggableColorCard from "../../components/draggableColorCard/DraggableColorCard";
+import DraggableColorList from "../../components/draggableColorList/DraggableColorList";
+import { SortEnd, SortEvent } from "react-sortable-hoc";
+import { arrayMoveImmutable } from 'array-move'
+import {setColorOrder} from "../../state/actions/colorsActions";
 
 interface NewPalettePageStateProps {
     colors: Model.Color[];
 }
 
 interface NewPalettePageDispatchProps {
-
+    setColorOrder: (colors: Model.Color[])=> void
 }
 
 interface NewPalettePageCustomProps {
@@ -24,9 +27,7 @@ const NewPalettePage : React.FC<NewPalettePageProps> = (props: NewPalettePagePro
     function renderDraggablePalette() : React.ReactElement {
         return (
             <div className={'palette'}>
-                {props.colors.map(color=> {
-                    return <DraggableColorCard color={color} key={color.name} />
-                })}
+                <DraggableColorList colors={props.colors} setColorOrder={props.setColorOrder} />
             </div>
         )
     }
@@ -45,4 +46,6 @@ const MapStateToProps = (state: Model.StoreState) : Model.ColorsState => {
     })
 }
 
-export default connect(MapStateToProps)(NewPalettePage);
+const MapDispatchToProps = {setColorOrder}
+
+export default connect(MapStateToProps, MapDispatchToProps)(NewPalettePage);

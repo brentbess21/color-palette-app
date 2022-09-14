@@ -11,7 +11,9 @@ const colorsReducer = (state : Model.ColorsState = initialColorsState, action: a
         case(ColorActionTypes.deleteColor):
             return ({...state, colors: state.colors.filter(color=> color !== action.payload)})
         case(ColorActionTypes.clearColors):
-            return ({...state, colors: []})
+            return ({...state, colors: []});
+        case(ColorActionTypes.setColorOrder):
+            return ({...state, colors: action.payload})
         default:
             return state
     }

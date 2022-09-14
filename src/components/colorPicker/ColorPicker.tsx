@@ -10,7 +10,7 @@ interface ColorPickerStateProps {
 }
 
 interface ColorPickerDispatchProps {
-    addColor: (name: string, color: any)=> void ;
+    addColor: (id: string | number, name: string, color: any)=> void ;
     clearColors: ()=> void;
 }
 
@@ -44,13 +44,13 @@ const ColorPicker: React.FC<ColorPickerProps> = (props: ColorPickerProps) : Reac
             return hex.length === 1 ? '0' + hex : hex
         }).join('');
         const randomColorName = `Random Color ${props.colors.length + 1}`
-        props.addColor(randomColorName, randomColor);
+        props.addColor(randomColorName,randomColorName, randomColor);
         setFormValues('');
     }
 
     function handleSubmit(e: FormEvent){
         e.preventDefault()
-        props.addColor(formValues, pickedColor.hex);
+        props.addColor(formValues, formValues, pickedColor.hex);
         setFormValues('');
     }
 

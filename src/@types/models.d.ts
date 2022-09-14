@@ -38,6 +38,7 @@ declare namespace Model {
     }
 
     export interface Color {
+        id: string | number
         name: string;
         color: string;
     }
