@@ -23,6 +23,7 @@ type ColorPickerProps = ColorPickerStateProps & ColorPickerDispatchProps & Color
 const ColorPicker: React.FC<ColorPickerProps> = (props: ColorPickerProps) : React.ReactElement => {
     const [pickedColor, setPickedColor] = useState<any>('#0000FF');
     const [formValues, setFormValues] = useState<string>('');
+    const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
     useEffect(()=> {
         ValidatorForm.addValidationRule('uniqueName', (value)=> {
@@ -35,6 +36,17 @@ const ColorPicker: React.FC<ColorPickerProps> = (props: ColorPickerProps) : Reac
         // })
     }, [formValues]);
 
+    useEffect(()=>{
+        if(!isDisabled && props.colors.length >= 20){
+            setIsDisabled(true)
+        }
+
+        if(isDisabled && props.colors.length < 20){
+            setIsDisabled(false);
+        }
+
+    },[props.colors])
+
     function generateRandomColor(){
         const r = Math.floor(Math.random() * 256);
         const g = Math.floor(Math.random() * 256);
@@ -43,7 +55,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props: ColorPickerProps) : Reac
             const hex = x.toString(16)
             return hex.length === 1 ? '0' + hex : hex
         }).join('');
-        const randomColorName = `Random Color ${props.colors.length + 1}`
+        const randomColorName = `Random Color ${Date.now()}`
         props.addColor(randomColorName,randomColorName, randomColor);
         setFormValues('');
     }
@@ -63,12 +75,12 @@ const ColorPicker: React.FC<ColorPickerProps> = (props: ColorPickerProps) : Reac
             <h1>Design Your Palette</h1>
             <div className={'buttonContainer'}>
                 <button onClick={()=>{props.clearColors()}}>Clear Palette</button>
-                <button onClick={generateRandomColor}>Random Color</button>
+                <button onClick={generateRandomColor} disabled={isDisabled}>Random Color</button>
             </div>
             <ChromePicker color={pickedColor} onChange={(color)=>setPickedColor(color)}/>
             <ValidatorForm className={'inputContainer'} onSubmit={handleSubmit}>
                 <TextValidator autoFocus label={'Color Name'} className={'colorInput'} name={'colorName'} value={formValues} onChange={handleChange} validators={['required', 'uniqueName']} errorMessages={['Color name is required', 'That name has already been used']} />
-                <button type={'submit'}>Add Color</button>
+                <button type={'submit'} disabled={isDisabled} style={{backgroundColor: pickedColor.hex}}>Add Color</button>
             </ValidatorForm>
         </div>
     )

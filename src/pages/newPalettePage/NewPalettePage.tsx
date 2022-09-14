@@ -4,8 +4,6 @@ import SlideOutDrawer from "../../components/slideOutDrawer/SlideOutDrawer";
 import ColorPicker from "../../components/colorPicker/ColorPicker";
 import {connect} from "react-redux";
 import DraggableColorList from "../../components/draggableColorList/DraggableColorList";
-import { SortEnd, SortEvent } from "react-sortable-hoc";
-import { arrayMoveImmutable } from 'array-move'
 import {setColorOrder} from "../../state/actions/colorsActions";
 
 interface NewPalettePageStateProps {
