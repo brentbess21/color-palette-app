@@ -1,4 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
+import './PopUpForm.scss';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -92,7 +93,7 @@ const PopUpForm : React.FC<PopUpFormProps> = (props: PopUpFormProps) => {
     function renderEmojiForm(): React.ReactNode{
         return (
             <Dialog open={props.popUpStage === 'emoji'} onClose={props.handlePopUpClose}>
-                <Picker data={data} onEmojiSelect={handleSubmit} />
+                <Picker title={'Pick an emoji for your new palette'} data={data} onEmojiSelect={handleSubmit} />
             </Dialog>
         )
     }

@@ -58,7 +58,6 @@ const SlideOutDrawer : React.FC<SlideOutDrawerProps> = (props: SlideOutDrawerPro
 
     function handleDrawerClose(){
         setIsDrawerOpen(false);
-        setPopUpStage('form');
     };
 
     function handlePopUpOpen() {
@@ -67,6 +66,7 @@ const SlideOutDrawer : React.FC<SlideOutDrawerProps> = (props: SlideOutDrawerPro
 
     function handlePopUpClose() {
         setIsPopUpOpen(false);
+        setPopUpStage('form');
     }
 
     return (
