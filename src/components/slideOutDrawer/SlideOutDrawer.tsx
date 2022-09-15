@@ -48,6 +48,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const SlideOutDrawer : React.FC<SlideOutDrawerProps> = (props: SlideOutDrawerProps) : React.ReactElement => {
     const navigate = useNavigate();
+    const [popUpStage, setPopUpStage] = useState<'form' | 'emoji'>('form')
     const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(true);
     const [isPopUpOpen, setIsPopUpOpen] = useState<boolean>(false);
 
@@ -57,6 +58,7 @@ const SlideOutDrawer : React.FC<SlideOutDrawerProps> = (props: SlideOutDrawerPro
 
     function handleDrawerClose(){
         setIsDrawerOpen(false);
+        setPopUpStage('form');
     };
 
     function handlePopUpOpen() {
@@ -77,6 +79,8 @@ const SlideOutDrawer : React.FC<SlideOutDrawerProps> = (props: SlideOutDrawerPro
                 handlePopUpOpen={handlePopUpOpen}
                 handlePopUpClose={handlePopUpClose}
                 isPopUpOpen={isPopUpOpen}
+                popUpStage={popUpStage}
+                setPopUpStage={setPopUpStage}
             />
             <Drawer
                 sx={{

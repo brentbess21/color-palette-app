@@ -21,6 +21,8 @@ interface NewPaletteHeaderProps {
     handlePopUpOpen: ()=> void;
     handlePopUpClose: ()=> void;
     isPopUpOpen: boolean;
+    popUpStage: 'form' | 'emoji';
+    setPopUpStage: (popUpStage:'form' | 'emoji')=> void;
 }
 
 
@@ -67,7 +69,7 @@ const NewPaletteHeader : React.FC<NewPaletteHeaderProps> = (props: NewPaletteHea
                         </Typography>
                     </Box>
                     <Box>
-                        <PopUpForm isPopUpOpen={props.isPopUpOpen} handlePopUpClose={props.handlePopUpClose} />
+                        <PopUpForm isPopUpOpen={props.isPopUpOpen} handlePopUpClose={props.handlePopUpClose} popUpStage={props.popUpStage} setPopUpStage={props.setPopUpStage} />
                         <Button variant={'contained'} color={'secondary'} onClick={props.handlePopUpOpen}>Save Palette</Button>
                         <IconButton
                             color={'inherit'}

@@ -9,6 +9,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {connect} from "react-redux";
 import {savePalette} from "../../state/actions/paletteActions";
 import {useNavigate} from "react-router";
+import {clearColors} from "../../state/actions/colorsActions";
+import data from '@emoji-mart/data'
+// @ts-ignore
+import Picker from '@emoji-mart/react';
+
 
 interface PopUpFormStateProps {
     colors: Model.Color[]
@@ -16,11 +21,14 @@ interface PopUpFormStateProps {
 
 interface PopUpFormDispatchProps {
     savePalette: (palette: Model.StarterPalette)=> void;
+    clearColors: ()=> void;
 }
 
 interface PopUpFormCustomProps {
     isPopUpOpen: boolean;
     handlePopUpClose: ()=> void;
+    popUpStage: 'form' | 'emoji';
+    setPopUpStage: (popUpStage: 'form' | 'emoji') => void;
 }
 
 type PopUpFormProps = PopUpFormStateProps & PopUpFormDispatchProps & PopUpFormCustomProps;
@@ -42,19 +50,20 @@ const PopUpForm : React.FC<PopUpFormProps> = (props: PopUpFormProps) => {
         setPaletteName(e.target.value)
     }
 
-    function handleSubmit(){
+    function handleSubmit(emoji: any){
         const newPalette : Model.StarterPalette = {
             paletteName: paletteName,
-            emoji: 'put emoji here',
+            emoji: emoji.native,
             id: paletteName.toLowerCase().replace(/ /g, "-"),
             colors: props.colors
         }
         props.savePalette(newPalette);
+        props.clearColors();
         navigate('/');
     }
 
-    return (
-        <div className={'popUpForm'}>
+    function renderNameForm() : React.ReactNode{
+        return (
             <Dialog open={props.isPopUpOpen} onClose={props.handlePopUpClose}>
                 <DialogTitle>Almost Done!</DialogTitle>
                 <DialogContent>
@@ -74,8 +83,24 @@ const PopUpForm : React.FC<PopUpFormProps> = (props: PopUpFormProps) => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={props.handlePopUpClose}>Cancel</Button>
-                    <Button disabled={isDisabled} onClick={handleSubmit}>Save</Button>
+                    <Button disabled={isDisabled} onClick={()=>props.setPopUpStage('emoji')}>Next</Button>
                 </DialogActions>
+            </Dialog>
+        )
+    }
+
+    function renderEmojiForm(): React.ReactNode{
+        return (
+            <Dialog open={props.popUpStage === 'emoji'} onClose={props.handlePopUpClose}>
+                <Picker data={data} onEmojiSelect={handleSubmit} />
+            </Dialog>
+        )
+    }
+
+    return (
+        <div className={'popUpForm'}>
+            <Dialog open={props.isPopUpOpen} onClose={props.handlePopUpClose}>
+                {props.popUpStage === 'emoji'? renderEmojiForm() : renderNameForm()}
             </Dialog>
         </div>
     );
@@ -87,6 +112,6 @@ const MapStateToProps = (state: Model.StoreState) : Model.ColorsState => {
     })
 }
 
-const MapDispatchToProps = {savePalette}
+const MapDispatchToProps = {savePalette, clearColors}
 
 export default connect(MapStateToProps, MapDispatchToProps)(PopUpForm);
