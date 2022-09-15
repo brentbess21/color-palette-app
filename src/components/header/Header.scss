@@ -3,14 +3,20 @@
   align-items: center;
   border-bottom: 4px solid #2c2b2b;
   .logo {
+    display: flex;
     width: 240px;
     height: 8vh;
-    background-image: url('https://images.unsplash.com/photo-1614194076674-0598e6dd5703?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8cGFpbnRicnVzaHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60');
-    background-size: contain;
-    background-repeat: no-repeat;
+    background-color: #3a6c9d;
+    background-image: url("https://images.unsplash.com/photo-1487088678257-3a541e6e3922?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2874&q=80");
+    background-size: cover;
     background-position: center;
-    background-color: aqua;
     cursor: pointer;
+    font-family: 'Rock Salt', cursive;
+    align-items: center;
+    justify-content: center;
+    font-weight: bolder;
+    color: white;
+    text-shadow: black 2px 2px;
   }
 
   .slider {

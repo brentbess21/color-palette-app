@@ -66,7 +66,7 @@ const Header : React.FC<HeaderProps> = (props: HeaderProps) : React.ReactElement
 
     return(
         <header className={'header'}>
-            <div onClick={()=>{navigate('/')}} className={'logo'} ></div>
+            <div onClick={()=>{navigate('/')}} className={'logo'} > Color Palettes </div>
             {props.displaySlider && <div className={'slider'}>
                 <p>Level {props.sliderInfo.level}</p>
                 <Slider defaultValue={props.sliderInfo.level} min={100} max={900} step={100} onChange={changeLevel} />
